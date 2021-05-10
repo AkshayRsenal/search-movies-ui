@@ -24,95 +24,55 @@ function App() {
   }));
 
   const classes = useStyles();
+  const [searchResults, setSearchResults] = useState({
+    result: [],
+    tableCaption: 'No data found try refining your search and giving the entire keyword like : space'
+  });
 
- 
-
- 
-
-  const [searchResults, setSearchResults] = useState([]);
-  // const HandleInput = event => {
-    
-  //   useEffect(() => {
-  //     axios.get('http://localhost:5000/movies/all/' + event.target.value).then(res => {
-  //       console.log(res.data)
-  //       setSearchResults(res.data)
-  //       console.log(searchResults)
-  //     })
-  //   }, []);
-  // };
-
-
-  
-  var resultsSearched = [];
-  const HandleInput = event => {
-    if(event.target.value.length > 1)
-    {  
-      axios.get('http://localhost:5000/movies/all/' + event.target.value).then(res => {
-        // console.log(res.data)
-        resultsSearched = res.data
-        resultsSearched.forEach(element => {
-          console.log(element._index)
+  const handleSearch = async (event) => {
+    if (event.target.value.length > 1) {
+      const result = await axios.get(`${process.env.REACT_APP_SEARCH_MOVIE_SERVICE_HOST}` + 'all/' + event.target.value);
+      if (result.data.length > 0) {
+        setSearchResults({
+          result: result.data,
+          tableCaption: result.data.length + " record(s) fetched"
         });
-      })
+      } else {
+        setSearchResults({
+          result: [],
+          tableCaption: 'No data found, try refining your search and giving the entire keyword like : space'
+        });
+      }
     }
 
-          
-  };
-
-
-
+  }
 
   return (
-    <div>
+    <div center="align">
       <div>
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Search Movie content" onChange={HandleInput} placeholder="Enter name" />
-          <Button
-            color="primary"
-            // onClick={() => {
-            //   // getSearchResults();
-            // }}
-          >
-            Search
-          </Button>
+          <TextField id="standard-basic" label="search movie" onChange={handleSearch} placeholder="Enter Search Term" />
         </form>
       </div>
       <div>
         <TableContainer component={Paper}>
           <Table stickyHeader aria-label="sticky table">
+            <caption>{searchResults.tableCaption}</caption>
             <TableHead>
               <TableRow>
-                <TableCell>Id</TableCell>
-                <TableCell align="center">Title</TableCell>
-                <TableCell align="center">Director</TableCell>
-                <TableCell align="center">Plot</TableCell>
+                <TableCell align="left">Title</TableCell>
+                <TableCell align="left">Director</TableCell>
+                <TableCell align="left">Plot</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {
-                resultsSearched.forEach(element => {
-                  return <TableRow key={element._index}>
-                    <TableCell align="center">{element._index}</TableCell>
-                    <TableCell align="center">{element._index}</TableCell>
-                    <TableCell align="center">{element._index}</TableCell>
-                  </TableRow>
-                })
-              } 
-
-                {/* <TableBody>
-                  <TableRow key="index">
-                    <TableCell component="th" scope="row">1</TableCell>
-                    <TableCell align="center">Test Name</TableCell>
-                    <TableCell align="center">Test Age</TableCell>
-                    <TableCell align="center">Test Address</TableCell>
-                    <TableCell align="center">Test City</TableCell>
-                    <TableCell align="center">Test ContactNum</TableCell>
-                    <TableCell align="center">Test Salary</TableCell>
-                    <TableCell style={{ paddingRight: "114px" }} align="center">pDepartment</TableCell>
-                  </TableRow>
-                </TableBody>   */}
-                 
-
+              {searchResults.result.map((row) => (
+                <TableRow key={row._id}>
+                  <TableCell align="left">{row._source.title}</TableCell>
+                  <TableCell align="left">{row._source.director}</TableCell>
+                  <TableCell align="left">{row._source.plot}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>

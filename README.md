@@ -1,4 +1,33 @@
+# Architecture and Design of Movies Search App
+The Architecture of the Movies Search App started with a monolithic architecture which included:
+
+- A backend service named 'movie_app_backend' with endpoint '/refresh'
+- Elasticsearch injest data API
+- 3rd Party Movies API (https://www.omdbapi.com/)
+
+This service was also hosted on heroku which  https://obscure-sands-07920.herokuapp.com/
+
+After creating this structure it was observed that the architecture would require scaling as the service (movie_app_backend) should only be used for updating data fetched data into Elasticsearch
+
+The Monolithic Architecture was then altered by adding another independent service named 'search_movies_service' making the architecture a Microservice Architecture which now included two miroservices
+
+The backend service 'search_movies_service' included:
+- An endpoint with dynamic route for searching
+- Connection to Elasticsearch
+- Logic to search Elasticsearch as per input passed
+
+Another Microservice for Frontend named 'search_movies_ui' was created and was connected to backend service 'search_movies_service'
+
+This Frontend service included:
+- Functionality to search the movies by sending requests to 'search_movies_service' that provided search results as response
+- Search Bar to accept and search User input
+- A react table to display the search results
+
+
+
 # Getting Started with Movies Search App
+
+The project can be started using npm pack
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
