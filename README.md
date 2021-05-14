@@ -21,9 +21,9 @@
 
   | Service                 | Repository                                                                                                                                                                                                                                                  |  |       |   |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | --------- | ------------- |
-| `movies_app_refresh`         | https://github.com/AkshayRsenal/movie_app_backend                                                                                                                                                                                       |     |   |             |
-| `movies_search_service` | https://github.com/AkshayRsenal/search_movies_service                                                                                         |    |  |         |
-| `movies_search_ui`  | https://github.com/AkshayRsenal/search_movies_ui |    |   |             |
+| `movies_app_refresh`         | https://github.com/AkshayRsenal/movie-app-backend                                                                                                                                                                                       |     |   |             |
+| `movies_search_service` | https://github.com/AkshayRsenal/search-movies-service                                                                                         |    |  |         |
+| `movies_search_ui`  | https://github.com/AkshayRsenal/search-movies-ui |    |   |             |
 
 
 ## Choice of database 
@@ -32,7 +32,7 @@
 
 ## Deployment Consideration 
 - Having a good understanding that running code on local machine will never be the same as running it on a productive environment, I wanted to deploy all my code on free hoisting server for it to be publicly available 
-- I chose Heroku as a free hoisting provider . All my Apps are now publicly available
+- I chose Heroku as a free hosting provider . All my Apps are now publicly available
 
 
  | Service                 | Deployed URL                                                                                                                                                                                                                                                  |  |       |   |
@@ -47,6 +47,7 @@
 - The password for the cloud elastic search must not be store in free text and if possible as a environment variable in Heroku.
 - Elastic Search is the simple text and can be extended to include fuzzy matching to make the search more effective.
 - Although the poster url is fetched in the react app, the app is not currently rendering the image
+- .env files provided should not have been put on GitHub, added them for anyone who clones the repositories to test locally
 - unit testing was not performed and should be included
 
 
@@ -59,10 +60,10 @@ Make sure you have [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs
 
 clone the repo and install the npm dependencies
 ```
-git clone https://github.com/AkshayRsenal/search_movies_ui
+git clone https://github.com/AkshayRsenal/search-movies-ui
 ```
 ```
-cd search_movies_ui
+cd search-movies-ui
 ```
 ```
 npm install
@@ -82,10 +83,10 @@ Make sure you have [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs
 
 clone the repo and install the npm dependencies
 ```
-git clone https://github.com/AkshayRsenal/search_movies_service
+git clone https://github.com/AkshayRsenal/search-movies-service
 ```
 ```
-cd search_movies_service
+cd search-movies-service
 ```
 ```
 npm install
@@ -105,10 +106,10 @@ Make sure you have [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs
 
 clone the repo and install the npm dependencies
 ```
-git clone https://github.com/AkshayRsenal/movie_app_backend
+git clone https://github.com/AkshayRsenal/movie-app-backend
 ```
 ```
-cd movie_app_backend
+cd movie-app-backend
 ```
 ```
 npm install
