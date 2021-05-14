@@ -31,7 +31,7 @@ function App() {
 
   const handleSearch = async (event) => {
     if (event.target.value.length > 1) {
-      const result = await axios.get(`${process.env.REACT_APP_SEARCH_MOVIE_SERVICE_HOST}all/`+ event.target.value);
+      const result = await axios.get(`${process.env.REACT_APP_SEARCH_MOVIE_SERVICE_HOST}all/` + event.target.value);
       if (result.data.length > 0) {
         setSearchResults({
           result: result.data,
@@ -77,7 +77,6 @@ function App() {
           </Table>
         </TableContainer>
       </div>
-
     </div>
   );
 }
