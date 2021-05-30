@@ -31,6 +31,12 @@ function App() {
 
   const handleSearch = async (event) => {
     if (event.target.value.length > 1) {
+      /* axios.get('url//').then((data)=>{})
+      data = await axios.get('url//');
+
+      var somevariable = await fetch('') 
+      var anotherVariable = await somevariable.json() */ 
+      
       const result = await axios.get(`${process.env.REACT_APP_SEARCH_MOVIE_SERVICE_HOST}all/` + event.target.value);
       if (result.data.length > 0) {
         setSearchResults({
