@@ -7,9 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from "@material-ui/core/Button";
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Button from '@material-ui/core/Button';
 
 function SearchTable() {
 
@@ -53,6 +53,7 @@ function SearchTable() {
     <div center="align">
       <div>
         <TextField id="standard-basic" label="search movie" onChange={handleSearch} placeholder="Enter Search Term" />
+        {/* <Button variant="contained" color="primary">{console.log(useLocation())}</Button> */}
       </div>
       <div>
         <TableContainer component={Paper}>
@@ -63,6 +64,7 @@ function SearchTable() {
                 <TableCell align="left">Title</TableCell>
                 <TableCell align="left">Director</TableCell>
                 <TableCell align="left">Plot</TableCell>
+                <TableCell align="left">Poster</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -71,6 +73,9 @@ function SearchTable() {
                   <TableCell align="left">{row._source.title}</TableCell>
                   <TableCell align="left">{row._source.director}</TableCell>
                   <TableCell align="left">{row._source.plot}</TableCell>
+                  {/* <TableCell align="left">{row._source.poster}</TableCell> */}
+                  <TableCell align="left">{(row._source.poster == "N/A" ) ? ( 'Not Available' ) : (<a href={row._source.poster} target="_blank">View Poster</a>) }</TableCell>
+
                 </TableRow>
               ))}
             </TableBody>

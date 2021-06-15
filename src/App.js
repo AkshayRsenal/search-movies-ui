@@ -6,43 +6,51 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useState } from 'react';
-
-import SearchTable from "./components-custom/SearchTable";
-import Home from "./components-custom/ComponentHome"
 import './App.css';
+import routesMap from './imports/routesMap';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
+import IconButton from '@material-ui/core/IconButton';
+import { Link as RouterLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
 
-const drawerWidth = 240;
+
+const drawerWidth = 190;
+
 function App(props) {
+
   const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
-        margin: theme.spacing(1),
+        // margin: theme.spacing(1),
         width: '25ch',
       },
       display: 'flex',
+
     },
     drawer: {
+      width: 0,
+
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
         flexShrink: 0,
       },
     },
     appBar: {
+      width: `100%`,
+
       [theme.breakpoints.up('sm')]: {
-        width: `calc(100% - ${drawerWidth}px)`,
+        width: `calc(100%)`,
         marginLeft: drawerWidth,
+        zIndex: '9999999',
       },
     },
     menuButton: {
@@ -54,12 +62,21 @@ function App(props) {
     // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
-      width: drawerWidth,
+      width: `50%`,
+
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+      },
+
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
+      [theme.breakpoints.up('sm')]: {
+        width: `100%`,
+      },
     },
+
   }));
 
   const { window } = props;
@@ -67,45 +84,29 @@ function App(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const [displayContent, setDisplayContent] = useState(<Home />);
-  const [toolbarDisplay, setToolbarDisplay] = useState('home');
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  const handleGetContent = (paramComponent, index) => {
-    switch (paramComponent) {
-      case 'search':
-        setDisplayContent(<SearchTable />);
-        break;
-      case 'home':
-        setDisplayContent(<Home />);
-        break;
-      default:
-        setDisplayContent(<Home />);
-        break;
-    }
-
-    setSelectedIndex(index)
-    setToolbarDisplay(paramComponent)
+  const handleBreadcrumbs = function handleClick(event) {
+    event.preventDefault();
+    console.info('You clicked a breadcrumb.');
   }
 
 
   const drawer = (
     <div>
       <div className={classes.toolbar} />
-      <Divider />
       <List>
-        <ListItem button selected={selectedIndex === 0} key="Home" onClick={() => handleGetContent("home", 0)}>
-          <ListItemIcon><MailIcon /></ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItem>
-        <ListItem button="true" selected={selectedIndex === 1} key="Search" onClick={() => handleGetContent("search", 1)} to="/any">
-          <ListItemIcon><MailIcon /></ListItemIcon>
-          <ListItemText primary="Search Movies" />
-        </ListItem>
+        {
+          routesMap.map((routeElement) => (
+            <ListItem button key={routeElement.tabName} component="a" href={routeElement.route}>
+              <ListItemIcon>{routeElement.iconComponent}</ListItemIcon>
+              <ListItemText primary={routeElement.tabName} />
+            </ListItem>
+          ))
+        }
       </List>
       <Divider />
     </div>
@@ -113,9 +114,14 @@ function App(props) {
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
-
+  const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
+  let BreadcrumbTrail;
+  let AnycrumbTrail;
+  let currentPathElements;
+  // let pointToUrl;
   return (
     <div className={classes.root}>
+
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -129,7 +135,7 @@ function App(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {toolbarDisplay}
+            KinoKlick
           </Typography>
         </Toolbar>
       </AppBar>
@@ -166,12 +172,62 @@ function App(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <Router>
+          
+          <Route exact component={BreadcrumbTrail = (componentPath) => {
+            return (
+              <Breadcrumbs aria-label="breadcrumb">
+                {currentPathElements = useLocation().pathname.split("/").filter((isAnElement) => isAnElement)}
 
-        {displayContent}
-        
+
+                <LinkRouter color="inherit" to={"/"} > Home </LinkRouter>
+                {
+                  currentPathElements.map((value, index) => {
+                    let lastElement = index === (currentPathElements.length - 1)
+                    let pointToUrl = "/" + (currentPathElements.slice(0, index + 1).join("/"))
+                    let routeData = routesMap.filter(objectRoute => { return objectRoute.route === pointToUrl });
+                    return (
+                      // <LinkRouter color="inherit" to={ routeData[0].route } >
+                      //   {routeData[0].tabName}
+                      // </LinkRouter>
+                      // lastElement ? (
+                      //   <Typography>
+                      //     {routeData[0].tabName}
+                      //   </Typography>
+                      // ) : (
+                      <LinkRouter color="inherit" to={routeData[0].route} >
+                        {routeData[0].tabName}
+                      </LinkRouter>
+                      // )
+                    );
+                  })
+                }
+              </Breadcrumbs>
+            )
+          }} />
+
+          <Divider />
+          <Divider />
+          <Divider />
+
+          {
+            routesMap.map((components) => (
+              <Route path={components.route} exact component={components.componentName} />
+            ))
+          }
+        </Router>
+
       </main>
     </div>
   );
 }
+
+// App.propTypes = {
+//   /**
+//    * Injected by the documentation to work in an iframe.
+//    * You won't need it on your project.
+//    */
+//   window: PropTypes.func,
+// };
 
 export default App;
