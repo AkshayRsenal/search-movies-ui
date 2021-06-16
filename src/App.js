@@ -34,7 +34,6 @@ function App(props) {
         width: '25ch',
       },
       display: 'flex',
-
     },
     drawer: {
       width: 0,
@@ -67,7 +66,6 @@ function App(props) {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
       },
-
     },
     content: {
       flexGrow: 1,
@@ -84,17 +82,10 @@ function App(props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const handleBreadcrumbs = function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
-  }
-
-
+  
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -113,15 +104,10 @@ function App(props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-
   const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
-  let BreadcrumbTrail;
-  let AnycrumbTrail;
   let currentPathElements;
-  // let pointToUrl;
   return (
     <div className={classes.root}>
-
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -173,13 +159,10 @@ function App(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Router>
-          
           <Route exact component={BreadcrumbTrail = (componentPath) => {
             return (
               <Breadcrumbs aria-label="breadcrumb">
                 {currentPathElements = useLocation().pathname.split("/").filter((isAnElement) => isAnElement)}
-
-
                 <LinkRouter color="inherit" to={"/"} > Home </LinkRouter>
                 {
                   currentPathElements.map((value, index) => {
@@ -216,18 +199,9 @@ function App(props) {
             ))
           }
         </Router>
-
       </main>
     </div>
   );
 }
-
-// App.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   window: PropTypes.func,
-// };
 
 export default App;

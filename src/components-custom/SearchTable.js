@@ -29,8 +29,6 @@ function SearchTable() {
     tableCaption: 'No data found try refining your search and giving the entire keyword like : space'
   });
 
-
-
   const handleSearch = async (event) => {
     if (event.target.value.length > 1) {
       const result = await axios.get(`${process.env.REACT_APP_SEARCH_MOVIE_SERVICE_HOST}all/` + event.target.value);
@@ -46,7 +44,6 @@ function SearchTable() {
         });
       }
     }
-
   }
 
   return (
