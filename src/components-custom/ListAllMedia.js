@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
 
 
 function ListAllMedia() {
@@ -80,7 +81,7 @@ function ListAllMedia() {
                     <TableCell align="left">{row._source.director}</TableCell>
                     <TableCell align="left">{row._source.plot}</TableCell>
                     {/* <TableCell align="left">{row._source.plot}</TableCell> */}
-                    <TableCell align="left">{(row._source.poster == "N/A") ? ('Not Available') : (<a href={row._source.poster} target="_blank">View Poster</a>)}</TableCell>
+                    <TableCell align="center">{(row._source.poster == "N/A") ? ('Not Available') : (<Button variant="contained" color="primary" href={row._source.poster} target="_blank">View Poster</Button>)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
