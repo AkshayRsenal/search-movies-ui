@@ -16,11 +16,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import './App.css';
 import routesMap from './imports/routesMap';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
-import { Link as RouterLink } from 'react-router-dom';
 import { BrowserRouter as Router, Route, useLocation } from "react-router-dom";
+import BreadcrumbTrail from './components-custom/BreadcrumbTrail';
 
 
 const drawerWidth = 190;
@@ -81,11 +79,10 @@ function App(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  let BreadcrumbTrail;
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  
+
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -104,8 +101,7 @@ function App(props) {
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
-  const LinkRouter = (props) => <Link {...props} component={RouterLink} />;
-  let currentPathElements;
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -159,35 +155,8 @@ function App(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Router>
-          <Route exact component={BreadcrumbTrail = (componentPath) => {
-            return (
-              <Breadcrumbs aria-label="breadcrumb">
-                {currentPathElements = useLocation().pathname.split("/").filter((isAnElement) => isAnElement)}
-                <LinkRouter color="inherit" to={"/"} > Home </LinkRouter>
-                {
-                  currentPathElements.map((value, index) => {
-                    let lastElement = index === (currentPathElements.length - 1)
-                    let pointToUrl = "/" + (currentPathElements.slice(0, index + 1).join("/"))
-                    let routeData = routesMap.filter(objectRoute => { return objectRoute.route === pointToUrl });
-                    return (
-                      // <LinkRouter color="inherit" to={ routeData[0].route } >
-                      //   {routeData[0].tabName}
-                      // </LinkRouter>
-                      // lastElement ? (
-                      //   <Typography>
-                      //     {routeData[0].tabName}
-                      //   </Typography>
-                      // ) : (
-                      <LinkRouter color="inherit" to={routeData[0].route} >
-                        {routeData[0].tabName}
-                      </LinkRouter>
-                      // )
-                    );
-                  })
-                }
-              </Breadcrumbs>
-            )
-          }} />
+          <Route exact component={BreadcrumbTrail} />
+
 
           <Divider />
           <Divider />

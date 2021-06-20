@@ -38,7 +38,7 @@ function ListAllMedia() {
   var getAllMedia = async () => {
     var resources = await axios.get(`http://localhost:5000/all-media-resources`);
     if (resources.data.length > 0) {
-      console.log(resources.data);
+      // console.log(resources.data);
       setAllMediaResources({
         result: resources.data,
         tableCaption: resources.data.length + " record(s) fetched"
